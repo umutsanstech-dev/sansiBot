@@ -27,14 +27,14 @@ class Scheduler:
             try:
                 await self._run_bet_cycle()
                 # Kupon tamamlandıktan sonra çok kısa bir bekleme (sadece sistem nefes alsın)
-                await asyncio.sleep(0.07)
+                await asyncio.sleep(0.02)
             except asyncio.CancelledError:
                 logger.info("Zamanlayıcı iptal edildi")
                 break
             except Exception as e:
                 logger.error(f"Zamanlayıcı döngüsünde hata: {e}")
                 # Hata olsa bile devam et - kısa bekleme
-                await asyncio.sleep(0.7)
+                await asyncio.sleep(0.15)
                 
     async def _run_bet_cycle(self):
         """Bir kupon yapma döngüsü"""

@@ -15873,3 +15873,373 @@ Call log:
 2026-03-02 09:12:13 - scraper - WARNING - Live sayfasında market seçilemedi - event kapatılıyor
 2026-03-02 09:12:13 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
 2026-03-02 09:12:14 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:29 - __main__ - INFO - ==================================================
+2026-03-02 10:29:29 - __main__ - INFO - Sansi Bot Başlatılıyor...
+2026-03-02 10:29:29 - __main__ - INFO - ==================================================
+2026-03-02 10:29:29 - bot - INFO - Bot başlatılıyor...
+2026-03-02 10:29:31 - scraper - INFO - Browser tam ekran modunda başlatıldı
+2026-03-02 10:29:31 - scraper - INFO - Siteye gidiliyor: https://test-sansi.sanstech.dev
+2026-03-02 10:29:32 - scraper - INFO - Giriş butonu aranıyor...
+2026-03-02 10:29:33 - scraper - INFO - Giriş butonu CSS seçici ile bulundu
+2026-03-02 10:29:37 - scraper - INFO - Giriş formu dolduruluyor...
+2026-03-02 10:29:37 - scraper - INFO - Kullanıcı adı alanı bulundu
+2026-03-02 10:29:38 - scraper - INFO - Şifre alanı (password type) bulundu
+2026-03-02 10:29:38 - scraper - INFO - Giriş submit butonu aranıyor...
+2026-03-02 10:29:38 - scraper - INFO - Giriş submit butonu spesifik seçici ile bulundu
+2026-03-02 10:29:39 - scraper - INFO - Giriş işlemi bekleniyor...
+2026-03-02 10:29:40 - scraper - INFO - Giriş Yap butonu kayboldu - Giriş başarılı
+2026-03-02 10:29:40 - scraper - INFO - Mevcut URL: https://test-sansi.sanstech.dev/
+2026-03-02 10:29:40 - scraper - INFO - Giriş başarılı
+2026-03-02 10:29:41 - bot - INFO - Bot başarıyla başlatıldı
+2026-03-02 10:29:41 - scheduler - INFO - Zamanlayıcı başlatıldı - Sürekli kupon yapılacak (interval yok)
+2026-03-02 10:29:41 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:41 ===
+2026-03-02 10:29:41 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:41 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:41 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:41 - scraper - INFO - Kategori span bulundu (CSS seçici): Canlı
+2026-03-02 10:29:42 - scraper - INFO - Kategoriye gidildi: Canlı Bülten
+2026-03-02 10:29:42 - scraper - INFO - Live sayfasında maçlar aranıyor...
+2026-03-02 10:29:42 - scraper - INFO - Live sayfasında 5 maç bulundu
+2026-03-02 10:29:42 - bot - INFO - Kategoride 5 maç var, her maç için 1 seçimli kupon yapılacak (hedef: 20)
+2026-03-02 10:29:42 - scraper - INFO - Live sayfasında maçlar aranıyor...
+2026-03-02 10:29:42 - scraper - INFO - Live sayfasında 5 maç bulundu
+2026-03-02 10:29:43 - scraper - WARNING - Live market container bulunamadı
+2026-03-02 10:29:43 - scraper - WARNING - Live sayfasında market seçilemedi - event kapatılıyor
+2026-03-02 10:29:43 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:44 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:46 - scraper - WARNING - Live market container bulunamadı
+2026-03-02 10:29:46 - scraper - WARNING - Live sayfasında market seçilemedi - event kapatılıyor
+2026-03-02 10:29:46 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:46 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:48 - scraper - WARNING - Live market container bulunamadı
+2026-03-02 10:29:48 - scraper - WARNING - Live sayfasında market seçilemedi - event kapatılıyor
+2026-03-02 10:29:48 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:49 - scraper - INFO - Canlı Bülten: ESC ile event kapatıldı
+2026-03-02 10:29:49 - scraper - WARNING - Live sayfasında bahis yapılırken hata: Locator.scroll_into_view_if_needed: Target page, context or browser has been closed
+2026-03-02 10:29:49 - scraper - WARNING - Live sayfasında bahis yapılırken hata: Locator.scroll_into_view_if_needed: Target page, context or browser has been closed
+2026-03-02 10:29:50 - scraper - WARNING - Live: Tüm maçlar denendi, hiçbirinde bahis yapılamadı
+2026-03-02 10:29:50 - bot - ERROR - Kategori işlenirken hata (Canlı Bülten): too many values to unpack (expected 5)
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:50 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:50 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:50 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:50 ===
+2026-03-02 10:29:50 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:50 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:50 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:50 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:50 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:51 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:51 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:51 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:51 ===
+2026-03-02 10:29:51 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:51 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:51 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:51 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:51 ===
+2026-03-02 10:29:51 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:51 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:51 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:51 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:51 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:52 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:52 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:52 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:52 ===
+2026-03-02 10:29:52 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:52 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:52 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:52 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:52 ===
+2026-03-02 10:29:52 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:52 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:52 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:52 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:52 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:53 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:53 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:53 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:53 ===
+2026-03-02 10:29:53 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Voleybol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Tenis
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Tenis
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Tenis): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Tenis
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Masa Tenisi
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Masa Tenisi
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Masa Tenisi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Masa Tenisi
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Buz Hokeyi
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Buz Hokeyi
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Buz Hokeyi): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Buz Hokeyi
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Hentbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Hentbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Hentbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Hentbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Uzun Vadeli
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Uzun Vadeli
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Uzun Vadeli): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Uzun Vadeli
+2026-03-02 10:29:53 - bot - WARNING - Hiç kupon oluşturulamadı
+2026-03-02 10:29:53 - scheduler - WARNING - Kupon döngüsü tamamlandı ancak başarısız olabilir
+2026-03-02 10:29:53 - scheduler - INFO - === Yeni kupon döngüsü başlatılıyor - 2026-03-02 10:29:53 ===
+2026-03-02 10:29:53 - bot - INFO - Kupon oluşturma döngüsü başlatılıyor...
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Canlı Bülten
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Canlı Bülten
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Canlı Bülten): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Canlı Bülten
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Futbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Futbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Futbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: Basketbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: Basketbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (Basketbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: Basketbol
+2026-03-02 10:29:53 - bot - INFO - Kategori işleniyor: E-Futbol
+2026-03-02 10:29:53 - scraper - INFO - Kategoriye gidiliyor: E-Futbol
+2026-03-02 10:29:53 - scraper - ERROR - Kategoriye gidilemedi (E-Futbol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:53 - bot - WARNING - Kategoriye gidilemedi: E-Futbol
+2026-03-02 10:29:54 - bot - INFO - Kategori işleniyor: Voleybol
+2026-03-02 10:29:54 - scraper - INFO - Kategoriye gidiliyor: Voleybol
+2026-03-02 10:29:54 - scraper - ERROR - Kategoriye gidilemedi (Voleybol): Locator.wait_for: Target page, context or browser has been closed
+2026-03-02 10:29:54 - bot - WARNING - Kategoriye gidilemedi: Voleybol

@@ -74,7 +74,7 @@ class Sansibot:
                 logger.warning(f"Kategoriye gidilemedi: {category_name}")
                 return 0
             
-            await asyncio.sleep(0.04)
+            await asyncio.sleep(0.02)
             
             if category_name == "Canlı Bülten":
                 matches = await self.scraper.get_available_matches_live()
@@ -109,7 +109,7 @@ class Sansibot:
                     if category_name == "Canlı Bülten":
                         logger.warning("Canlı Bülten: Maç bulunamadı - kategori değişmiş olabilir, Canlı'ya yeniden gidiliyor")
                         await self.scraper.navigate_to_category(category_name)
-                        await asyncio.sleep(0.7)
+                        await asyncio.sleep(0.15)
                         current_matches = await self.scraper.get_available_matches_live()
                     if not current_matches:
                         logger.warning("Maç kalmadı, kategori tamamlandı")
@@ -137,7 +137,7 @@ class Sansibot:
                     try:
                         from config import BASE_URL
                         await self.scraper.page.goto(BASE_URL, wait_until="domcontentloaded", timeout=10000)
-                        await asyncio.sleep(0.35)
+                        await asyncio.sleep(0.08)
                     except:
                         pass
                     # Sonra kategoriye git
@@ -145,7 +145,7 @@ class Sansibot:
                     if not success:
                         logger.warning(f"Kategoriye geri dönülemedi: {category_name}")
                         break
-                    await asyncio.sleep(0.2)  # Kategori yüklenmesi için bekleme
+                    await asyncio.sleep(0.05)
                     # Maçları tekrar al
                     if category_name == "Canlı Bülten":
                         current_matches = await self.scraper.get_available_matches_live()
@@ -165,10 +165,10 @@ class Sansibot:
                 else:
                     # Seçim yapılamadı - bülten değiştirme, tekrar dene (stabilizasyon)
                     logger.warning(f"Kupon başarısız (seçim yapılamadı), tekrar deneniyor...")
-                    await asyncio.sleep(0.15)  # Sayfa stabilizasyonu için kısa bekleme
+                    await asyncio.sleep(0.02)
                 
                 # Kısa bekleme (sistem nefes alsın)
-                await asyncio.sleep(0.07)
+                await asyncio.sleep(0.02)
             
             logger.info(f"Kategori tamamlandı: {category_name} - {coupons_created} kupon yapıldı")
             return coupons_created
@@ -191,7 +191,7 @@ class Sansibot:
                 try:
                     coupons_created = await self.process_category(category)
                     total_coupons += coupons_created
-                    await asyncio.sleep(0.04)  # Çok kısa bekleme
+                    await asyncio.sleep(0.02)
                     
                 except Exception as e:
                     logger.error(f"Kategori işlenirken hata ({category}): {e}")

@@ -154,14 +154,14 @@ class SansibotScraper:
             logger.info(f"Siteye gidiliyor: {BASE_URL}")
             # Daha esnek bekleme stratejisi - önce domcontentloaded, sonra elementleri bekle
             await self.page.goto(BASE_URL, wait_until="domcontentloaded", timeout=PAGE_LOAD_TIMEOUT)
-            await asyncio.sleep(0.35)  # Sayfanın tam yüklenmesi için kısa bekleme
+            await asyncio.sleep(0.08)
             await self._random_delay()
             
             # "Giriş Yap" butonunu bul ve tıkla
             logger.info("Giriş butonu aranıyor...")
             
             # Önce sayfanın yüklenmesini bekle
-            await asyncio.sleep(1.3)
+            await asyncio.sleep(0.05)
             
             # Strateji 1: CSS seçici ile span elementi (verilen elemente özel)
             login_button = None
@@ -252,9 +252,8 @@ class SansibotScraper:
             await submit_button.scroll_into_view_if_needed()
             await submit_button.click()
             
-            # Giriş başarılı mı kontrol et - daha esnek bekleme
             logger.info("Giriş işlemi bekleniyor...")
-            await asyncio.sleep(1.0)  # Kısa bekleme
+            await asyncio.sleep(0.1)
             
             # "Giriş Yap" butonunun kaybolmasını bekle (giriş başarılı olduğunda kaybolur)
             try:
@@ -288,7 +287,7 @@ class SansibotScraper:
                 pass  # Timeout olsa bile devam et
             
             # Son kontrol: Kullanıcı adı veya profil görünüyor mu?
-            await asyncio.sleep(0.2)
+                await asyncio.sleep(0.05)
             current_url = self.page.url
             logger.info(f"Mevcut URL: {current_url}")
             
@@ -302,7 +301,7 @@ class SansibotScraper:
                     window.moveTo(0, 0);
                     window.resizeTo(screen.availWidth, screen.availHeight);
                 """)
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.05)
                 
                 # CDP (Chrome DevTools Protocol) ile window'u maksimize et
                 try:
@@ -322,7 +321,7 @@ class SansibotScraper:
                 except Exception as cdp_error:
                     logger.debug(f"CDP maksimize hatası (normal): {cdp_error}")
                 
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.05)
                 
                 # Sonra fullscreen API ile tam ekran yap
                 await self.page.evaluate("""
@@ -336,7 +335,7 @@ class SansibotScraper:
                         document.documentElement.msRequestFullscreen();
                     }
                 """)
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.05)
             except Exception as e:
                 logger.debug(f"Tam ekran yapma hatası (devam ediliyor): {e}")
             
@@ -395,7 +394,7 @@ class SansibotScraper:
             try:
                 await self.page.wait_for_load_state("domcontentloaded", timeout=5000)
             except:
-                await asyncio.sleep(0.35)
+                await asyncio.sleep(0.08)
             
             logger.info(f"Kategoriye gidildi: {category_name}")
             return True
@@ -506,7 +505,7 @@ class SansibotScraper:
         try:
             # 1. ESC - en güvenli, kategori değiştirmez
             await self.page.keyboard.press('Escape')
-            await asyncio.sleep(0.09)
+            await asyncio.sleep(0.03)
             logger.info("Canlı Bülten: ESC ile event kapatıldı")
         except:
             pass
@@ -850,6 +849,26 @@ class SansibotScraper:
         except Exception as e:
             logger.debug(f"Tamam butonu bulunamadı veya tıklanamadı: {e}")
         return False
+
+    async def _handle_kupon_oynanamadi(self) -> bool:
+        """Kupon oynanamadı hatası: Kapat butonuna tıkla, sonra Kuponu Temizle ile kuponu temizle"""
+        try:
+            await asyncio.sleep(0.1)
+            kapat_btn = self.page.get_by_role("button", name="Kapat").first
+            if await kapat_btn.is_visible(timeout=2000):
+                await kapat_btn.click()
+                logger.info("Kupon oynanamadı - Kapat butonuna tıklandı")
+                await asyncio.sleep(0.08)
+            clear_btn = self.page.locator('button[title="Kuponu Temizle"]').first
+            if await clear_btn.is_visible(timeout=2000):
+                await clear_btn.click()
+                logger.info("Kuponu Temizle butonuna tıklandı - kupon temizlendi")
+                await asyncio.sleep(0.05)
+                return True
+            return False
+        except Exception as e:
+            logger.warning(f"Kupon oynanamadı işlemi sırasında hata: {e}")
+            return False
     
     async def _check_api_response(self) -> Tuple[bool, bool]:
         """API response'unu kontrol et - (başarılı, para yatırma gerekli)"""
@@ -860,7 +879,7 @@ class SansibotScraper:
             try:
                 async with self.page.expect_response(
                     lambda response: 'ticket/place' in response.url,
-                    timeout=5000  # Daha kısa timeout - hızlı
+                    timeout=3000
                 ) as response_info:
                     response = await response_info.value
             except Exception as e:
@@ -924,9 +943,9 @@ class SansibotScraper:
                 await profile_button.wait_for(state="visible", timeout=5000)
             
             await profile_button.scroll_into_view_if_needed()
-            await asyncio.sleep(0.04)
+            await asyncio.sleep(0.02)
             await profile_button.click()
-            await asyncio.sleep(0.07)
+            await asyncio.sleep(0.02)
             
             # 2. "Para Yatır" menü öğesine tıkla
             deposit_menu = self.page.locator(
@@ -935,7 +954,7 @@ class SansibotScraper:
             
             await deposit_menu.wait_for(state="visible", timeout=5000)
             await deposit_menu.click()
-            await asyncio.sleep(0.07)
+            await asyncio.sleep(0.02)
             
             # 3. Input alanına 1000 yaz - Para yatır input'u
             # Önce input'u bul, eğer yoksa form içindeki input'u bul
@@ -962,20 +981,20 @@ class SansibotScraper:
             
             await deposit_submit.wait_for(state="visible", timeout=5000)
             await deposit_submit.click()
-            await asyncio.sleep(0.65)  # Para yatırma işlemi için bekleme
+            await asyncio.sleep(0.1)
             
             # Para yatırdıktan sonra modal/dialog kapanabilir, sayfayı yenile veya ana sayfaya dön
             try:
                 # Modal'ı kapatmak için ESC tuşuna bas veya dışarı tıkla
                 await self.page.keyboard.press('Escape')
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.05)
             except:
                 pass
             
             # Ana sayfaya dön (kategoriye geri dönmek için)
             try:
                 await self.page.goto(BASE_URL, wait_until="domcontentloaded", timeout=10000)
-                await asyncio.sleep(0.35)
+                await asyncio.sleep(0.08)
                 logger.info("Para yatırma sonrası ana sayfaya dönüldü")
             except Exception as e:
                 logger.warning(f"Ana sayfaya dönülürken hata: {e}")
@@ -1044,7 +1063,7 @@ class SansibotScraper:
                     except:
                         await container.click()
                     # Panel güncellenene kadar bekle (yanlış maça seçim eklenmesini önler)
-                    await asyncio.sleep(0.45)
+                    await asyncio.sleep(0.1)
                     
                     market_success = await self._select_market_and_odds(category_name, container)
                     if not market_success:
@@ -1081,11 +1100,11 @@ class SansibotScraper:
                 
                 if success:
                     logger.info(f"Kupon başarıyla oluşturuldu ({bets_added} bahis)")
-                    # Seçim onay dialogunu kapat - Tamam butonuna tıkla (eski seçimlerin kalmasını önler)
-                    await asyncio.sleep(0.25)
+                    await asyncio.sleep(0.05)
                     await self._click_tamam_button()
                 else:
-                    logger.warning("Kupon oluşturulamadı")
+                    logger.warning("Kupon oluşturulamadı - Kapat ve Kuponu Temizle işlemi yapılıyor")
+                    await self._handle_kupon_oynanamadi()
                 
                 return success, False, None, used_match_keys, tried_no_market_keys
             elif bets_added > 0:
@@ -1123,7 +1142,7 @@ class SansibotScraper:
                     return False, True, None, []
                 # Market bulunamadı veya hata - event kapat, sonraki maça geç
                 await self._close_live_event(match.get('container'))
-                await asyncio.sleep(0.18)
+                await asyncio.sleep(0.05)
             
             logger.warning("Live: Tüm maçlar denendi, hiçbirinde bahis yapılamadı")
             return False, False, None, []
@@ -1152,7 +1171,7 @@ class SansibotScraper:
                 await clickable_area.click()
             except:
                 await container.click()
-            await asyncio.sleep(0.35)
+            await asyncio.sleep(0.1)
             
             # div.grid.grid-cols-3.gap-2.mb-2 içindeki butonlara tıkla (önce container içinde, sonra sayfa)
             grid = container.locator('div.grid.grid-cols-3.gap-2.mb-2').first
@@ -1199,8 +1218,10 @@ class SansibotScraper:
                     return False, True, None, []
             
             if success:
-                await asyncio.sleep(0.25)
+                await asyncio.sleep(0.05)
                 await self._click_tamam_button()
+            else:
+                await self._handle_kupon_oynanamadi()
             
             used = [self._get_match_key(match)] if success else []
             return success, False, None, used
@@ -1216,7 +1237,7 @@ class SansibotScraper:
             
             await container.scroll_into_view_if_needed()
             await container.click()
-            await asyncio.sleep(0.18)
+                await asyncio.sleep(0.05)
             
             # Market seç ve odds'a tıkla - Canlı Bülten özel buton yapısı (TEK outcome)
             market_success = await self._select_market_and_odds_live(container)
@@ -1243,8 +1264,10 @@ class SansibotScraper:
                     return False, True, None  # Kategoriye geri dön
             
             if success:
-                await asyncio.sleep(0.25)
+                await asyncio.sleep(0.05)
                 await self._click_tamam_button()
+            else:
+                await self._handle_kupon_oynanamadi()
             
             return success, False, None
             
@@ -1268,7 +1291,7 @@ class SansibotScraper:
             ).first
             
             await clickable_area.click()
-            await asyncio.sleep(0.35)
+            await asyncio.sleep(0.1)
             
             # Market seç ve odds'a tıkla - container ile maça özel panel
             market_success = await self._select_market_and_odds(category_name, container)
@@ -1291,8 +1314,10 @@ class SansibotScraper:
                 deposit_success = await self._deposit_money()
                 if deposit_success:
                     logger.info("Para yatırıldı, kategoriye geri dönülecek")
-                    # Ana sayfaya dönüldü (_deposit_money içinde), kategoriye dönme işlemi bot.py'de yapılacak
-                    return False, True, None  # Kategoriye geri dön
+                    return False, True, None
+            else:
+                if not success:
+                    await self._handle_kupon_oynanamadi()
             
             return success, False, None
             
@@ -1325,7 +1350,7 @@ class SansibotScraper:
                     ).first
                     
                     await clickable_area.click()
-                    await asyncio.sleep(0.35)
+                    await asyncio.sleep(0.08)
                     
                     # Market seç ve odds'a tıkla - container ile maça özel panel
                     market_success = await self._select_market_and_odds(category_name="", container=container)
@@ -1357,7 +1382,8 @@ class SansibotScraper:
                         selected_count += 1
                         logger.info(f"Bahis başarıyla seçildi (Maç: {' vs '.join(match['teams']) if match['teams'] else 'Bilinmiyor'})")
                     else:
-                        logger.warning("Bahis seçimi başarısız oldu")
+                        logger.warning("Bahis seçimi başarısız - Kupon temizleniyor")
+                        await self._handle_kupon_oynanamadi()
                     
                     # Bekleme yok - hemen bir sonraki maça geç
                     

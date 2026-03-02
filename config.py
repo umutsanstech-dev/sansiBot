@@ -29,10 +29,10 @@ ELEMENT_WAIT_TIMEOUT = 30000  # 30 saniye (milisaniye)
 PAGE_LOAD_TIMEOUT = 60000  # 60 saniye (milisaniye)
 HEADLESS = False  # Browser'ı görünür modda çalıştır (True yaparsanız arka planda çalışır)
 
-# Bekleme süreleri (hızlandırılmış)
-ACTION_DELAY_MIN = 0.25  # Minimum bekleme süresi (saniye)
-ACTION_DELAY_MAX = 0.45  # Maksimum bekleme süresi (saniye)
+# Bekleme süreleri (minimum - maksimum hız)
+ACTION_DELAY_MIN = 0.02  # Minimum bekleme (saniye)
+ACTION_DELAY_MAX = 0.06  # Maksimum bekleme (saniye)
 
 # Retry ayarları
-MAX_RETRIES = 3  # Maksimum deneme sayısı
-RETRY_DELAY = 1.5  # Retry arası bekleme süresi (saniye)
+MAX_RETRIES = 3
+RETRY_DELAY = 0.4  # Retry arası (saniye)
