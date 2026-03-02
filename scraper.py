@@ -853,19 +853,45 @@ class SansibotScraper:
     async def _handle_kupon_oynanamadi(self) -> bool:
         """Kupon oynanamadı hatası: Kapat butonuna tıkla, sonra Kuponu Temizle ile kuponu temizle"""
         try:
+            await asyncio.sleep(0.5)
+            kapat_clicked = False
+            for selector in [
+                'button.bg-dark-600:has-text("Kapat")',
+                '[role="dialog"] button:has-text("Kapat")',
+                'button.w-full.bg-dark-600',
+                'button:has-text("Kapat")',
+            ]:
+                try:
+                    kapat_btn = self.page.locator(selector).first
+                    if await kapat_btn.is_visible(timeout=1500):
+                        await kapat_btn.scroll_into_view_if_needed()
+                        await kapat_btn.click(force=True)
+                        logger.info("Kupon oynanamadı - Kapat butonuna tıklandı")
+                        kapat_clicked = True
+                        break
+                except Exception:
+                    continue
+            if not kapat_clicked:
+                logger.warning("Kapat butonu bulunamadı")
+            await asyncio.sleep(0.2)
+            clear_clicked = False
+            for selector in [
+                'button[title="Kuponu Temizle"]',
+                'button[title*="Temizle"]',
+                'button:has(svg path[d*="M3 6h18"])',
+            ]:
+                try:
+                    clear_btn = self.page.locator(selector).first
+                    if await clear_btn.is_visible(timeout=1500):
+                        await clear_btn.scroll_into_view_if_needed()
+                        await clear_btn.click(force=True)
+                        logger.info("Kuponu Temizle butonuna tıklandı")
+                        clear_clicked = True
+                        break
+                except Exception:
+                    continue
             await asyncio.sleep(0.1)
-            kapat_btn = self.page.get_by_role("button", name="Kapat").first
-            if await kapat_btn.is_visible(timeout=2000):
-                await kapat_btn.click()
-                logger.info("Kupon oynanamadı - Kapat butonuna tıklandı")
-                await asyncio.sleep(0.08)
-            clear_btn = self.page.locator('button[title="Kuponu Temizle"]').first
-            if await clear_btn.is_visible(timeout=2000):
-                await clear_btn.click()
-                logger.info("Kuponu Temizle butonuna tıklandı - kupon temizlendi")
-                await asyncio.sleep(0.05)
-                return True
-            return False
+            return kapat_clicked or clear_clicked
         except Exception as e:
             logger.warning(f"Kupon oynanamadı işlemi sırasında hata: {e}")
             return False
