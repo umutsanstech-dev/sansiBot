@@ -1237,7 +1237,7 @@ class SansibotScraper:
             
             await container.scroll_into_view_if_needed()
             await container.click()
-                await asyncio.sleep(0.05)
+            await asyncio.sleep(0.05)
             
             # Market seç ve odds'a tıkla - Canlı Bülten özel buton yapısı (TEK outcome)
             market_success = await self._select_market_and_odds_live(container)
