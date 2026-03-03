@@ -67,8 +67,9 @@ class Sansibot:
         """Bir kategoriyi işle - Canlı: 20 kupon, Diğerleri: 5 kupon"""
         try:
             logger.info(f"Kategori işleniyor: {category_name}")
-            
-            # Kategoriye git
+
+            await self.scraper.ensure_session()
+
             success = await self.scraper.navigate_to_category(category_name)
             if not success:
                 logger.warning(f"Kategoriye gidilemedi: {category_name}")
@@ -125,14 +126,14 @@ class Sansibot:
                         break
                 
                 # Kupon yap - tüm maçları sırayla dener, market yoksa sonrakine geçer
-                success, needs_return, failed_key, used_keys, tried_no_market = await self.scraper.create_single_coupon(current_matches, category_name, tried_match_ids)
-                
+                coupons_count, needs_return, failed_key, used_keys, tried_no_market = await self.scraper.create_single_coupon(current_matches, category_name, tried_match_ids)
+
                 tried_match_ids.update(tried_no_market)
                 if failed_key:
                     tried_match_ids.add(failed_key)
-                
+
                 # Tüm maçlar denendi, hiçbirinde market yoksa sonraki kategoriye geç
-                if not success and not needs_return and tried_no_market:
+                if coupons_count == 0 and not needs_return and tried_no_market:
                     logger.info("Tüm maçlar denendi, market bulunamadı - sonraki kategoriye geçiliyor")
                     break
                 
@@ -147,8 +148,8 @@ class Sansibot:
                     except:
                         pass
                     # Sonra kategoriye git
-                    success = await self.scraper.navigate_to_category(category_name)
-                    if not success:
+                    nav_success = await self.scraper.navigate_to_category(category_name)
+                    if not nav_success:
                         logger.warning(f"Kategoriye geri dönülemedi: {category_name}")
                         break
                     await asyncio.sleep(0.05)
@@ -163,15 +164,13 @@ class Sansibot:
                         break
                     continue
                 
-                if success:
-                    coupons_created += 1
-                    # Canlı/Uzun Vadeli hariç: used_keys ekleme - aynı maçlar farklı kuponlarda kullanılabilir (5 kupon için)
+                if coupons_count > 0:
+                    coupons_created += coupons_count
                     if category_name in ("Canlı Bülten", "Uzun Vadeli"):
                         tried_match_ids.update(used_keys)
                     logger.info(f"Kupon {coupons_created}/{target_coupons} tamamlandı")
                 else:
-                    # Seçim yapılamadı (para yatırma hariç) - tekrar dene (stabilizasyon)
-                    logger.warning(f"Kupon başarısız (seçim yapılamadı), tekrar deneniyor...")
+                    logger.warning("Kupon başarısız (seçim yapılamadı), tekrar deneniyor...")
                     await asyncio.sleep(0.02)
                 
                 # Kısa bekleme (sistem nefes alsın)
@@ -189,7 +188,9 @@ class Sansibot:
         try:
             logger.info("Kupon oluşturma döngüsü başlatılıyor...")
             total_coupons = 0
-            
+
+            await self.scraper.ensure_session()
+
             # Tüm kategorileri dolaş
             for category in CATEGORIES:
                 if not self.is_running:

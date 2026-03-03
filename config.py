@@ -2,12 +2,13 @@ BASE_URL = "https://test-sansi.sanstech.dev"
 LOGIN_URL = f"{BASE_URL}/login"
 
 # Kullanıcı bilgileri
-USERNAME = "playwright_bot_user2"
+USERNAME = "playwright_bot_user"
 PASSWORD = "Password123!!"
 
 # Kupon yapma ayarları
 BETS_PER_CATEGORY_MIN = 2  # Her kategoriden minimum bahis sayısı
 BETS_PER_CATEGORY_MAX = 10  # Her kategoriden maksimum bahis sayısı
+LIVE_COUPONS_PER_MATCH = 10  # Canlı Bülten'de market bulunduğunda aynı maçtan yapılacak kupon sayısı
 
 # Spor kategorileri
 CATEGORIES = [

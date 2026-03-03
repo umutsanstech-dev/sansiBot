@@ -4,9 +4,9 @@ import logging
 from playwright.async_api import async_playwright, Page, Browser, BrowserContext
 from typing import List, Dict, Optional, Tuple
 from config import (
-    BASE_URL, USERNAME, PASSWORD, BROWSER_TIMEOUT, 
-    ELEMENT_WAIT_TIMEOUT, PAGE_LOAD_TIMEOUT, HEADLESS, ACTION_DELAY_MIN, 
-    ACTION_DELAY_MAX, MAX_RETRIES, RETRY_DELAY
+    BASE_URL, USERNAME, PASSWORD, BROWSER_TIMEOUT,
+    ELEMENT_WAIT_TIMEOUT, PAGE_LOAD_TIMEOUT, HEADLESS, ACTION_DELAY_MIN,
+    ACTION_DELAY_MAX, MAX_RETRIES, RETRY_DELAY, LIVE_COUPONS_PER_MATCH
 )
 
 logger = logging.getLogger(__name__)
@@ -344,7 +344,31 @@ class SansibotScraper:
         except Exception as e:
             logger.error(f"Giriş yapılırken hata: {e}")
             return False
-            
+
+    async def is_session_valid(self) -> bool:
+        """Oturumun geçerli olup olmadığını kontrol et - Giriş Yap butonu görünürse geçersiz"""
+        try:
+            if not self.page:
+                return False
+            login_btn = self.page.get_by_text("Giriş Yap", exact=True).first
+            visible = await login_btn.is_visible(timeout=2000)
+            return not visible
+        except Exception:
+            return True
+
+    async def ensure_session(self) -> bool:
+        """Oturum geçersizse yeniden giriş yap"""
+        if await self.is_session_valid():
+            return True
+        logger.warning("Oturum sonlandı tespit edildi, yeniden giriş yapılıyor...")
+        try:
+            await self.page.goto(BASE_URL, wait_until="domcontentloaded", timeout=PAGE_LOAD_TIMEOUT)
+            await asyncio.sleep(0.08)
+            return await self.login()
+        except Exception as e:
+            logger.error(f"Yeniden giriş başarısız: {e}")
+            return False
+
     async def navigate_to_category(self, category_name: str) -> bool:
         """Belirtilen kategoriye git"""
         try:
@@ -896,59 +920,53 @@ class SansibotScraper:
             logger.warning(f"Kupon oynanamadı işlemi sırasında hata: {e}")
             return False
     
-    async def _check_api_response(self) -> Tuple[bool, bool]:
-        """API response'unu kontrol et - (başarılı, para yatırma gerekli)"""
-        """API response'unu kontrol et - (başarılı, para yatırma gerekli)"""
+    async def _check_api_response(self) -> Tuple[bool, bool, bool]:
+        """API response'unu kontrol et - (başarılı, para yatırma gerekli, oturum sonlandı)"""
         try:
-            # Network response'ları dinle - ticket/place endpoint'ini bekle
             response = None
             try:
                 async with self.page.expect_response(
-                    lambda response: 'ticket/place' in response.url,
+                    lambda r: 'ticket/place' in r.url,
                     timeout=3000
                 ) as response_info:
                     response = await response_info.value
             except Exception as e:
                 logger.debug(f"API response bekleme timeout: {e}")
-                # Timeout olabilir ama başarılı olabilir, True döndür (hızlı devam et)
-                return True, False
-            
+                return True, False, False
+
             if response:
                 response_text = await response.text()
                 logger.info(f"API Response Status: {response.status}")
                 logger.info(f"API Response: {response_text[:300]}")
-                
-                # Başarılı kontrolü
+
                 if response.status == 200:
                     try:
                         response_json = await response.json()
                         if 'ticketId' in str(response_json) or 'id' in str(response_json):
                             logger.info("Kupon başarıyla oluşturuldu")
-                            return True, False
-                    except:
-                        # JSON parse edilemezse text içinde kontrol et
+                            return True, False, False
+                    except Exception:
                         if 'ticketId' in response_text or '"id"' in response_text:
                             logger.info("Kupon başarıyla oluşturuldu (text kontrolü)")
-                            return True, False
-                
-                # Hata kontrolü
+                            return True, False, False
+
                 response_lower = response_text.lower()
+                if response.status in (401, 403):
+                    logger.warning("Oturum sonlandı (401/403) - Yeniden giriş gerekli")
+                    return False, False, True
                 if 'insufficient balance' in response_lower or 'account issue' in response_lower:
                     logger.warning("Yetersiz bakiye hatası - Para yatırma gerekli")
-                    return False, True
-                
-                # Diğer hatalar
+                    return False, True, False
+
                 if response.status >= 400:
                     logger.warning(f"API hatası: {response.status} - {response_text[:200]}")
-                    return False, False
-            
-            # Response yoksa başarılı sayalım (zaten tıklama yapıldı)
-            return True, False
-            
+                    return False, False, False
+
+            return True, False, False
+
         except Exception as e:
             logger.debug(f"API response kontrolü sırasında hata: {e}")
-            # Hata olsa bile başarılı sayalım (zaten tıklama yapıldı)
-            return True, False
+            return True, False, False
     
     async def _deposit_money(self) -> bool:
         """Para yatırma işlemi"""
@@ -1032,39 +1050,38 @@ class SansibotScraper:
             logger.error(f"Para yatırma işlemi sırasında hata: {e}")
             return False
     
-    async def create_single_coupon(self, matches: List[Dict], category_name: str, tried_match_ids: Optional[set] = None) -> Tuple[bool, bool, Optional[tuple], List[tuple], List[tuple]]:
+    async def create_single_coupon(self, matches: List[Dict], category_name: str, tried_match_ids: Optional[set] = None) -> Tuple[int, bool, Optional[tuple], List[tuple], List[tuple]]:
         """Tek bir kupon yap - Tüm maçları sırayla dene, market bulunamazsa sonrakine geç
-        Returns: (success, needs_category_return, failed_match_key, used_match_keys, tried_no_market_keys)
+        Returns: (coupons_count, needs_category_return, failed_match_key, used_match_keys, tried_no_market_keys)
         """
         try:
             if not matches:
                 logger.warning("Seçilecek maç bulunamadı")
-                return False, False, None, [], []
-            
-            # tried_match_ids dışındaki maçları kullan
+                return 0, False, None, [], []
+
             available = [m for m in matches if self._get_match_key(m) not in (tried_match_ids or set())]
             if not available:
                 logger.warning("Tüm maçlar zaten denenmiş")
-                return False, False, None, [], []
+                return 0, False, None, [], []
             
             matches_to_use = available
             
             # Live sayfası kontrolü
             is_live = self._is_live_page()
             if is_live:
-                success, needs_return, failed_key, used = await self._create_single_coupon_live(matches_to_use, category_name, tried_match_ids)
-                return success, needs_return, failed_key, used, [], []
-            
+                coupons_count, needs_return, failed_key, used = await self._create_single_coupon_live(matches_to_use, category_name, tried_match_ids)
+                return coupons_count, needs_return, failed_key, used, [], []
+
             # Uzun Vadeli: tüm maçları tek tek gez, her kupon 1 seçim, grid butonlarına tıkla
             if category_name == "Uzun Vadeli":
                 success, needs_return, failed_key, used = await self._create_single_coupon_outright(matches_to_use, tried_match_ids)
-                return success, needs_return, failed_key, used, [], []
+                return (1 if success else 0), needs_return, failed_key, used, [], []
             
             # 1-2 maç varsa 3+ seçim yapılamaz - sonraki kategoriye geç
             if len(matches_to_use) < 3:
                 logger.warning(f"Sadece {len(matches_to_use)} maç var, 3+ seçim için yeterli değil - sonraki kategoriye geçiliyor")
                 tried = [self._get_match_key(m) for m in matches_to_use]
-                return False, False, None, [], tried
+                return 0, False, None, [], tried
             
             # Hedef seçim sayısı (3-5 arası rastgele)
             target_selections = random.randint(3, 5)
@@ -1111,19 +1128,21 @@ class SansibotScraper:
                 play_success = await self._click_play_button()
                 if not play_success:
                     logger.warning("HEMEN OYNA butonuna tıklanamadı")
-                    return False, False, None, used_match_keys, tried_no_market_keys
+                    return 0, False, None, used_match_keys, tried_no_market_keys
                 
                 # API response kontrolü (tıklamadan sonra) - kısa timeout
-                success, needs_deposit = await self._check_api_response()
-                
+                success, needs_deposit, session_expired = await self._check_api_response()
+
+                if session_expired:
+                    await self.ensure_session()
+                    return 0, True, None, used_match_keys, tried_no_market_keys
                 if needs_deposit:
-                    # Para yatır ve kategoriye geri dön
                     logger.info("Para yatırma gerekiyor, işlem başlatılıyor...")
                     deposit_success = await self._deposit_money()
                     if deposit_success:
                         logger.info("Para yatırıldı, kategoriye geri dönülecek")
-                        return False, True, None, used_match_keys, tried_no_market_keys
-                
+                        return 0, True, None, used_match_keys, tried_no_market_keys
+
                 if success:
                     logger.info(f"Kupon başarıyla oluşturuldu ({bets_added} bahis)")
                     await asyncio.sleep(0.05)
@@ -1132,50 +1151,97 @@ class SansibotScraper:
                     logger.warning("Kupon oluşturulamadı - Kapat ve Kuponu Temizle işlemi yapılıyor")
                     await self._handle_kupon_oynanamadi()
                 
-                return success, False, None, used_match_keys, tried_no_market_keys
+                return 1 if success else 0, False, None, used_match_keys, tried_no_market_keys
             elif bets_added > 0:
-                # 1-2 seçim yapıldı ama en az 3 gerekli - bu maçları denendi say (tekrar deneme)
                 logger.warning(f"Yetersiz seçim ({bets_added}/3) - 3+ seçim için yeterli maç yok, sonraki kategoriye geçiliyor")
                 tried_no_market_keys.extend(used_match_keys)
-                return False, False, None, used_match_keys, tried_no_market_keys
+                return 0, False, None, used_match_keys, tried_no_market_keys
             else:
-                # Hiç market bulunamadı - sonraki kategoriye geç
                 logger.warning(f"Tüm {len(matches_to_use)} maç denendi, hiçbirinde market bulunamadı - sonraki kategoriye geçiliyor")
-                return False, False, None, [], tried_no_market_keys
-            
+                return 0, False, None, [], tried_no_market_keys
+
         except Exception as e:
             logger.error(f"Kupon oluşturulurken hata: {e}")
-            return False, False, None, [], []
+            return 0, False, None, [], []
     
-    async def _create_single_coupon_live(self, matches: List[Dict], category_name: str, tried_match_ids: set = None) -> Tuple[bool, bool, Optional[tuple], List[tuple]]:
-        """Live sayfası için tek bir kupon yap - TEK seçim, Futbol/Basketbol gibi maçları tek tek gez"""
+    async def _create_single_coupon_live(self, matches: List[Dict], category_name: str, tried_match_ids: set = None) -> Tuple[int, bool, Optional[tuple], List[tuple]]:
+        """Live sayfası: Market bulunan her maçtan LIVE_COUPONS_PER_MATCH (10) adet kupon yap - her kupon 1 seçim"""
         try:
             if not matches:
                 logger.warning("Live sayfasında seçilecek maç bulunamadı")
-                return False, False, None, []
-            
+                return 0, False, None, []
+
             available = [m for m in matches if self._get_match_key(m) not in (tried_match_ids or set())]
             if not available:
                 logger.warning("Live: Tüm maçlar denenmiş")
-                return False, False, None, []
-            
-            # Futbol/Basketbol gibi maçları tek tek gez - başarısız olunca sonrakine geç
+                return 0, False, None, []
+
             for match in available:
-                success, needs_return, failed_key = await self._place_bet_from_match_live(match)
-                if success:
-                    return True, False, None, [self._get_match_key(match)]
+                coupons_count, needs_return, failed_key = await self._place_coupons_from_match_live(match)
                 if needs_return:
-                    return False, True, None, []
-                # Market bulunamadı veya hata - event kapat, sonraki maça geç
+                    return coupons_count, True, None, []
+                if coupons_count > 0:
+                    return coupons_count, False, None, [self._get_match_key(match)]
+                if failed_key:
+                    pass
                 await self._close_live_event(match.get('container'))
                 await asyncio.sleep(0.05)
-            
+
             logger.warning("Live: Tüm maçlar denendi, hiçbirinde bahis yapılamadı")
-            return False, False, None, []
-            
+            return 0, False, None, []
+
         except Exception as e:
             logger.error(f"Live sayfasında kupon oluşturulurken hata: {e}")
-            return False, False, None, []
+            return 0, False, None, []
+
+    async def _place_coupons_from_match_live(self, match: Dict) -> Tuple[int, bool, Optional[tuple]]:
+        """Live: Bir maçta market bulunursa 10 adet tek seçimli kupon yap.
+        Returns: (coupons_count, needs_return, failed_key)
+        """
+        try:
+            container = match['container']
+            await container.scroll_into_view_if_needed()
+            await container.click()
+            await asyncio.sleep(0.05)
+
+            market_success = await self._select_market_and_odds_live(container)
+            if not market_success:
+                return 0, False, self._get_match_key(match)
+
+            coupons_count = 0
+            for i in range(LIVE_COUPONS_PER_MATCH):
+                if i > 0:
+                    market_success = await self._select_market_and_odds_live(container)
+                    if not market_success:
+                        break
+
+                play_success = await self._click_play_button()
+                if not play_success:
+                    break
+
+                success, needs_deposit, session_expired = await self._check_api_response()
+
+                if session_expired:
+                    await self.ensure_session()
+                    return coupons_count, True, None
+                if needs_deposit:
+                    deposit_success = await self._deposit_money()
+                    if deposit_success:
+                        return coupons_count, True, None
+                    break
+
+                if success:
+                    coupons_count += 1
+                    await asyncio.sleep(0.05)
+                    await self._click_tamam_button()
+                else:
+                    await self._handle_kupon_oynanamadi()
+
+            return coupons_count, False, None
+
+        except Exception as e:
+            logger.warning(f"Live sayfasında kupon yapılırken hata: {e}")
+            return 0, False, None
     
     async def _create_single_coupon_outright(self, matches: List[Dict], tried_match_ids: set = None) -> Tuple[bool, bool, Optional[tuple], List[tuple]]:
         """Uzun Vadeli için tek kupon - TEK seçim, tüm maçları sırayla gez, grid butonlarına tıkla"""
@@ -1237,69 +1303,27 @@ class SansibotScraper:
             if not play_success:
                 return False, False, None, []
             
-            success, needs_deposit = await self._check_api_response()
+            success, needs_deposit, session_expired = await self._check_api_response()
+            if session_expired:
+                await self.ensure_session()
+                return False, True, None, []
             if needs_deposit:
                 deposit_success = await self._deposit_money()
                 if deposit_success:
                     return False, True, None, []
-            
+
             if success:
                 await asyncio.sleep(0.05)
                 await self._click_tamam_button()
             else:
                 await self._handle_kupon_oynanamadi()
-            
+
             used = [self._get_match_key(match)] if success else []
             return success, False, None, used
-            
+
         except Exception as e:
             logger.error(f"Uzun Vadeli kupon oluşturulurken hata: {e}")
             return False, False, None, []
-    
-    async def _place_bet_from_match_live(self, match: Dict) -> Tuple[bool, bool, Optional[tuple]]:
-        """Live sayfası için tek bir maçtan bahis yap"""
-        try:
-            container = match['container']
-            
-            await container.scroll_into_view_if_needed()
-            await container.click()
-            await asyncio.sleep(0.05)
-            
-            # Market seç ve odds'a tıkla - Canlı Bülten özel buton yapısı (TEK outcome)
-            market_success = await self._select_market_and_odds_live(container)
-            if not market_success:
-                logger.warning("Live sayfasında market seçilemedi - event kapatılıyor")
-                await self._close_live_event(container)
-                return False, False, self._get_match_key(match)
-            
-            # HEMEN OYNA butonuna tıkla - hemen (tek outcome ile)
-            play_success = await self._click_play_button()
-            if not play_success:
-                logger.warning("HEMEN OYNA butonuna tıklanamadı")
-                return False, False, None
-            
-            # API response kontrolü
-            success, needs_deposit = await self._check_api_response()
-            
-            if needs_deposit:
-                # Para yatır ve kategoriye geri dön
-                logger.info("Para yatırma gerekiyor, işlem başlatılıyor...")
-                deposit_success = await self._deposit_money()
-                if deposit_success:
-                    logger.info("Para yatırıldı, kategoriye geri dönülecek")
-                    return False, True, None  # Kategoriye geri dön
-            
-            if success:
-                await asyncio.sleep(0.05)
-                await self._click_tamam_button()
-            else:
-                await self._handle_kupon_oynanamadi()
-            
-            return success, False, None
-            
-        except Exception as e:
-            logger.warning(f"Live sayfasında bahis yapılırken hata: {e}")
-            return False, False, None
     
     async def _place_bet_from_match(self, match: Dict, category_name: str) -> Tuple[bool, bool, Optional[tuple]]:
         """Tek bir maçtan bahis yap - Helper fonksiyon
@@ -1332,21 +1356,22 @@ class SansibotScraper:
                 return False, False, None
             
             # API response kontrolü
-            success, needs_deposit = await self._check_api_response()
-            
+            success, needs_deposit, session_expired = await self._check_api_response()
+
+            if session_expired:
+                await self.ensure_session()
+                return False, True, None
             if needs_deposit:
-                # Para yatır ve kategoriye geri dön
                 logger.info("Para yatırma gerekiyor, işlem başlatılıyor...")
                 deposit_success = await self._deposit_money()
                 if deposit_success:
                     logger.info("Para yatırıldı, kategoriye geri dönülecek")
                     return False, True, None
-            else:
-                if not success:
-                    await self._handle_kupon_oynanamadi()
-            
+            if not success:
+                await self._handle_kupon_oynanamadi()
+
             return success, False, None
-            
+
         except Exception as e:
             logger.warning(f"Bahis yapılırken hata: {e}")
             return False, False, None
@@ -1391,8 +1416,11 @@ class SansibotScraper:
                         continue
                     
                     # API response kontrolü (tıklamadan sonra) - kısa timeout
-                    success, needs_deposit = await self._check_api_response()
-                    
+                    success, needs_deposit, session_expired = await self._check_api_response()
+
+                    if session_expired:
+                        await self.ensure_session()
+                        return False, True
                     if needs_deposit:
                         # Para yatır
                         logger.info("Para yatırma gerekiyor, işlem başlatılıyor...")
